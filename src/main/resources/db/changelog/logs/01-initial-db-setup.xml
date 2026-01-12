@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20240520-1" author="Dmytro Yukhno">
+        <createTable tableName="users">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="username" type="VARCHAR(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="email" type="VARCHAR(100)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="role" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="first_name" type="VARCHAR(100)"/>
+            <column name="last_name" type="VARCHAR(100)"/>
+            <column name="phone" type="VARCHAR(20)"/>
+
+            <column name="enabled" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex indexName="idx_users_username" tableName="users">
+            <column name="username"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="20240520-2" author="Dmytro Yukhno">
+        <createTable tableName="properties">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="description" type="TEXT"/>
+
+            <column name="type" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="category" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="price" type="NUMERIC(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="address" type="VARCHAR(500)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="area" type="NUMERIC(10, 2)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="rooms" type="INTEGER" defaultValueNumeric="1">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="status" type="VARCHAR(50)" defaultValue="AVAILABLE">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="agent_id" type="BIGINT">
+                <constraints nullable="false"
+                             foreignKeyName="fk_property_agent"
+                             referencedTableName="users"
+                             referencedColumnNames="id"/>
+            </column>
+
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex indexName="idx_prop_price" tableName="properties">
+            <column name="price"/>
+        </createIndex>
+        <createIndex indexName="idx_prop_status" tableName="properties">
+            <column name="status"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="20240520-3" author="Dmytro Yukhno">
+        <createTable tableName="clients">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="full_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone" type="VARCHAR(20)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="email" type="VARCHAR(100)">
+                <constraints unique="true"/>
+            </column>
+            <column name="status" type="VARCHAR(50)" defaultValue="NEW">
+                <constraints nullable="false"/>
+            </column>
+            <column name="assigned_agent_id" type="BIGINT">
+                <constraints foreignKeyName="fk_client_agent" referencedTableName="users" referencedColumnNames="id"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="20240520-4" author="dima">
+        <createTable tableName="deals">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="property_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_deal_property" referencedTableName="properties"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="client_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_deal_client" referencedTableName="clients"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="agent_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_deal_agent" referencedTableName="users"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="final_price" type="NUMERIC(15, 2)"/>
+            <column name="status" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="closed_at" type="TIMESTAMP"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="20240520-5" author="Dmytro Yukhno">
+        <createTable tableName="tasks">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT"/>
+            <column name="due_date" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="priority" type="VARCHAR(20)" defaultValue="MEDIUM"/>
+            <column name="status" type="VARCHAR(20)" defaultValue="TODO"/>
+            <column name="agent_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_task_agent" referencedTableName="users"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="client_id" type="BIGINT">
+                <constraints foreignKeyName="fk_task_client" referencedTableName="clients" referencedColumnNames="id"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="20240520-6" author="Dmytro Yukhno">
+        <createTable tableName="interactions">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="client_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_inter_client" referencedTableName="clients"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="agent_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_inter_agent" referencedTableName="users"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="type" type="VARCHAR(50)"/>
+            <column name="notes" type="TEXT"/>
+            <column name="interaction_date" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
