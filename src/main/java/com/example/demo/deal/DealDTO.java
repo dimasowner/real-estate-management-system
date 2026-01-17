@@ -1,4 +1,4 @@
 //package com.example.demo.deal;
 //
-//public class DealService {
+//public class DealDTO {
 //}
