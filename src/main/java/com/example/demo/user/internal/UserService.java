@@ -1,8 +1,7 @@
-package com.example.demo.user;
+package com.example.demo.user.internal;
 
-import com.example.demo.user.UserRepository;
+import com.example.demo.user.UserRegistrationRequest;
 import lombok.RequiredArgsConstructor;
-import com.example.demo.user.internal.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
