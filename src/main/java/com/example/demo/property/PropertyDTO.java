@@ -1,4 +1,4 @@
 //package com.example.demo.property;
 //
-//public class PropertyService {
+//public class PropertyDTO {
 //}
