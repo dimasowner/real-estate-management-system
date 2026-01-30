@@ -4,7 +4,7 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="20240520-1" author="Dmytro Yukhno">
+    <changeSet id="20260114-1" author="Dmytro Yukhno">
         <createTable tableName="users">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -43,7 +43,7 @@
             <column name="username"/>
         </createIndex>
     </changeSet>
-    <changeSet id="20240520-2" author="Dmytro Yukhno">
+    <changeSet id="20260114-2" author="Dmytro Yukhno">
         <createTable tableName="properties">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -105,7 +105,7 @@
             <column name="status"/>
         </createIndex>
     </changeSet>
-    <changeSet id="20240520-3" author="Dmytro Yukhno">
+    <changeSet id="20260114-3" author="Dmytro Yukhno">
         <createTable tableName="clients">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -130,7 +130,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet id="20240520-4" author="dima">
+    <changeSet id="20260114-4" author="dima">
         <createTable tableName="deals">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -157,7 +157,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet id="20240520-5" author="Dmytro Yukhno">
+    <changeSet id="20260114-5" author="Dmytro Yukhno">
         <createTable tableName="tasks">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -180,7 +180,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet id="20240520-6" author="Dmytro Yukhno">
+    <changeSet id="20260114-6" author="Dmytro Yukhno">
         <createTable tableName="interactions">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -197,5 +197,8 @@
             <column name="notes" type="TEXT"/>
             <column name="interaction_date" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
         </createTable>
+    </changeSet>
+    <changeSet id="20260129-1" author="Dmytro Yukhno">
+        <dropColumn tableName="properties" columnName="category"/>
     </changeSet>
 </databaseChangeLog>

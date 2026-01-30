@@ -30,4 +30,8 @@ public class UserService {
                 .build();
         return userRepository.save(user).getId();
     }
+
+    public boolean existsById(Long id){
+        return userRepository.existsById(id);
+    }
 }
